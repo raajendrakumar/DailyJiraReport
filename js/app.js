@@ -83,8 +83,16 @@
     agingEl.classList.toggle('alert', s.aging > 0);
   }
 
+  function animateBars(container){
+    var tracks = container.querySelectorAll('.bar-track[data-pct]');
+    requestAnimationFrame(function(){
+      requestAnimationFrame(function(){
+        Array.prototype.forEach.call(tracks, function(el){ el.style.width = el.getAttribute('data-pct') + '%'; });
+      });
+    });
+  }
+
   function renderWorkload(data){
-    document.dispatchEvent(new CustomEvent('workload:data', {detail: data}));
     var card = document.getElementById('workload-card');
     if(!data.length){
       card.innerHTML = '<div class="empty-state">No open Stories or Bugs match the current filters.</div>';
@@ -102,14 +110,20 @@
       if(bg > 0){
         segs += '<div class="bar-seg bug ' + (st === 0 ? 'only-seg' : 'last-seg') + '" style="flex:' + bg + ' 0 0" title="' + bg + ' Bugs"><span class="seg-count">' + bg + '</span></div>';
       }
-      var nameCls = p.name === 'Unassigned' ? 'workload-name unassigned' : 'workload-name';
+      var isUnassigned = p.name === 'Unassigned';
+      var nameCls = isUnassigned ? 'workload-name unassigned' : 'workload-name';
+      var avatarCls = isUnassigned ? 'workload-avatar unassigned' : 'workload-avatar';
       return '<div class="workload-row">' +
-        '<div class="' + nameCls + '">' + esc(p.name) + '</div>' +
-        '<div class="bar-track" style="width:' + pct.toFixed(1) + '%">' + segs + '</div>' +
+        '<div class="workload-id">' +
+          '<span class="' + avatarCls + '">' + initials(p.name) + '</span>' +
+          '<span class="' + nameCls + '">' + esc(p.name) + '</span>' +
+        '</div>' +
+        '<div class="bar-track" data-pct="' + pct.toFixed(1) + '">' + segs + '</div>' +
         '<div class="workload-total">' + total + '</div>' +
         '</div>';
     }).join('');
     card.innerHTML = rows;
+    animateBars(card);
   }
 
   function renderMiniBars(containerId, rows){
@@ -124,10 +138,11 @@
       var pct = Math.max(r.count / max * 100, r.count > 0 ? 4 : 0);
       return '<div class="workload-row">' +
         '<div class="workload-name">' + esc(r.label) + '</div>' +
-        '<div class="bar-track" style="width:' + pct.toFixed(1) + '%"><div class="bar-seg only-seg" style="flex:1 0 0; background:' + r.color + '"></div></div>' +
+        '<div class="bar-track" data-pct="' + pct.toFixed(1) + '"><div class="bar-seg only-seg" style="flex:1 0 0; background-color:' + r.color + '"></div></div>' +
         '<div class="workload-total">' + r.count + '</div>' +
         '</div>';
     }).join('');
+    animateBars(container);
   }
 
   function renderBreakdowns(data){
