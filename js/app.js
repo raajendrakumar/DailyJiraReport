@@ -84,6 +84,7 @@
   }
 
   function renderWorkload(data){
+    document.dispatchEvent(new CustomEvent('workload:data', {detail: data}));
     var card = document.getElementById('workload-card');
     if(!data.length){
       card.innerHTML = '<div class="empty-state">No open Stories or Bugs match the current filters.</div>';

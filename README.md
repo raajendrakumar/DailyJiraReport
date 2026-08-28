@@ -13,7 +13,9 @@ a browser.
 - Snapshot stats: open stories, open bugs, total open items, assignee count,
   and items open 90+ days
 - Breakdown charts by priority and by status
-- Per-assignee workload bar chart (stories vs. bugs)
+- Per-assignee workload bar chart (stories vs. bugs), plus an interactive
+  3D version (drag to rotate, scroll to zoom, hover a bar for a tooltip)
+  that stays in sync with the current search/filters
 - Expandable per-assignee ticket tables with key, summary, priority, status,
   and days-open — rows aged 30+/90+ days are color-highlighted, and an
   "N aging" chip appears on affected assignees
@@ -31,7 +33,9 @@ a browser.
 index.html          Page markup + the published data snapshot
 css/styles.css       Design tokens and layout (light/dark theme via prefers-color-scheme)
 js/app.js            Rendering, search, and file-upload/parsing logic
+js/chart3d.js         The 3D workload chart (listens for the "workload:data" event app.js dispatches)
 js/vendor/xlsx.full.min.js   SheetJS, used to parse uploaded .xlsx/.xls files
+js/vendor/three/      Three.js r128 (core + OrbitControls + CSS2DRenderer), used by chart3d.js
 ```
 
 ## Updating the published snapshot
