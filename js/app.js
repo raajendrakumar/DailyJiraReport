@@ -96,10 +96,10 @@
       var pct = Math.max(total / maxTotal * 100, total > 0 ? 4 : 0);
       var segs = '';
       if(st > 0){
-        segs += '<div class="bar-seg story ' + (bg === 0 ? 'only-seg' : 'first-seg') + '" style="flex:' + st + ' 0 0" title="' + st + ' Stories"></div>';
+        segs += '<div class="bar-seg story ' + (bg === 0 ? 'only-seg' : 'first-seg') + '" style="flex:' + st + ' 0 0" title="' + st + ' Stories"><span class="seg-count">' + st + '</span></div>';
       }
       if(bg > 0){
-        segs += '<div class="bar-seg bug ' + (st === 0 ? 'only-seg' : 'last-seg') + '" style="flex:' + bg + ' 0 0" title="' + bg + ' Bugs"></div>';
+        segs += '<div class="bar-seg bug ' + (st === 0 ? 'only-seg' : 'last-seg') + '" style="flex:' + bg + ' 0 0" title="' + bg + ' Bugs"><span class="seg-count">' + bg + '</span></div>';
       }
       var nameCls = p.name === 'Unassigned' ? 'workload-name unassigned' : 'workload-name';
       return '<div class="workload-row">' +
