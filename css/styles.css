@@ -1339,6 +1339,16 @@ footer {
     width: 100%;
     justify-content: flex-start;
   }
+  .assignee-head {
+    flex-wrap: wrap;
+    gap: 10px 14px;
+  }
+  .assignee-id {
+    flex: 1 1 100%;
+  }
+  .assignee-counts {
+    flex: 1 1 auto;
+  }
 }
 
 /* Print Style */
