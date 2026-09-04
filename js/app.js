@@ -358,6 +358,56 @@
       '</tr>';
   }
 
+  function topBugRow(t, assigneeName){
+    var jiraUrl = JIRA_BASE_URL + encodeURIComponent(t.key);
+    var copyPayload = t.key + ': ' + (t.summary || '');
+
+    return '<tr>' +
+      '<td>' +
+        '<div class="key-wrapper">' +
+          '<a href="' + jiraUrl + '" target="_blank" rel="noopener noreferrer" class="key-link" title="Open in Jira">' + esc(t.key) + ' &#8599;</a>' +
+          '<button type="button" class="copy-btn" data-copy="' + esc(copyPayload) + '" title="Copy Key & Summary">&#128203;</button>' +
+        '</div>' +
+      '</td>' +
+      '<td class="summary-cell">' + esc(t.summary) + '</td>' +
+      '<td>' + esc(assigneeName) + '</td>' +
+      '<td><span class="priority-cell"><span class="prio-dot" style="background:' + priorityColor(t.priority) + '"></span>' + esc(t.priority || '&mdash;') + '</span></td>' +
+      '<td><span class="status-cell"><span class="status-dot" style="background:' + statusColor(t.status) + '"></span>' + esc(t.status || '&mdash;') + '</span></td>' +
+      '<td class="due-cell mono ' + ageClass(t.due) + '">' + (t.due || 0) + 'd</td>' +
+      '</tr>';
+  }
+
+  function renderTopBugs(data){
+    var tbody = document.getElementById('top-bugs-body');
+    if(!tbody) return;
+    var bugs = flatten(data).filter(function(x){ return x.itype === 'Bug'; })
+      .sort(function(a, b){ return (b.t.due || 0) - (a.t.due || 0); })
+      .slice(0, 20);
+
+    if(!bugs.length){
+      tbody.innerHTML = '<tr><td colspan="6" class="empty-state" style="border:none;">No open bugs match the current filters.</td></tr>';
+      return;
+    }
+
+    tbody.innerHTML = bugs.map(function(x){ return topBugRow(x.t, x.assignee); }).join('');
+
+    Array.prototype.forEach.call(tbody.querySelectorAll('.copy-btn'), function(btn){
+      btn.addEventListener('click', function(e){
+        e.stopPropagation();
+        var payload = btn.getAttribute('data-copy');
+        if(navigator.clipboard && navigator.clipboard.writeText){
+          navigator.clipboard.writeText(payload).then(function(){
+            showToast('Copied: ' + payload);
+          }).catch(function(){
+            showToast('Copied: ' + payload);
+          });
+        } else {
+          showToast('Copied: ' + payload);
+        }
+      });
+    });
+  }
+
   var SORTERS = {
     'age-desc': function(a, b){ return (b.t.due || 0) - (a.t.due || 0); },
     'age-asc': function(a, b){ return (a.t.due || 0) - (b.t.due || 0); },
@@ -498,6 +548,7 @@
     renderStats(filtered);
     renderBreakdowns(filtered);
     renderWorkload(filtered);
+    renderTopBugs(filtered);
     renderAssigneeList(filtered, document.getElementById('assignee-search').value);
   }
 
