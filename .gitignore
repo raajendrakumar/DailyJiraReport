@@ -1,0 +1,9 @@
+node_modules/
+.DS_Store
+Thumbs.db
+*.log
+
+# Never commit real secrets/credentials
+.env
+.env.*
+!.env.example

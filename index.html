@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="referrer" content="same-origin">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <title>TrueValueHub Daily Jira Bugs &amp; Stories Report</title>
+</head>
+<body>
+
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="masthead-text">
+      <p class="eyebrow">True ValueHub &middot; Engineering</p>
+      <h1>Daily Jira Bugs &amp; Stories Report</h1>
+      <p class="snapshot">Open Stories and Bugs &middot; project COS &middot; snapshot <span class="mono" id="snapshot-date">24 Aug 2026</span></p>
+    </div>
+    <div class="masthead-actions">
+      <button type="button" class="ghost" id="export-btn" title="Export the currently visible tickets as CSV">
+        <span aria-hidden="true">&#8595;</span> Export CSV
+      </button>
+      <button type="button" class="ghost" id="print-btn" title="Print or save as PDF">
+        <span aria-hidden="true">&#128424;</span> Print
+      </button>
+      <button type="button" class="ghost" id="upload-btn" title="Preview a newer export without publishing it">
+        <span aria-hidden="true">&#8593;</span> Upload a newer file
+      </button>
+      <input type="file" id="file-input" accept=".xlsx,.xls,.csv" />
+    </div>
+  </header>
+
+  <div class="preview-banner" id="preview-banner">
+    <span>Previewing <strong id="preview-filename"></strong> &mdash; this view is local to your browser and has not been published.</span>
+    <button type="button" id="reset-preview">Back to today&rsquo;s snapshot</button>
+  </div>
+
+  <section id="stats-section">
+    <h2 class="section-title">Snapshot</h2>
+    <div class="stat-grid">
+      <div class="stat-tile">
+        <div class="stat-label">Stories open</div>
+        <div class="stat-value mono" id="stat-stories">0</div>
+        <div class="stat-sub">Issue type = Story</div>
+      </div>
+      <div class="stat-tile">
+        <div class="stat-label">Bugs open</div>
+        <div class="stat-value mono" id="stat-bugs">0</div>
+        <div class="stat-sub">Issue type = Bug</div>
+      </div>
+      <div class="stat-tile">
+        <div class="stat-label">Total open items</div>
+        <div class="stat-value mono" id="stat-total">0</div>
+        <div class="stat-sub">Not in Done</div>
+      </div>
+      <div class="stat-tile">
+        <div class="stat-label">Assignees</div>
+        <div class="stat-value mono" id="stat-assignees">0</div>
+        <div class="stat-sub" id="stat-assignees-sub">Named owners</div>
+      </div>
+      <div class="stat-tile">
+        <div class="stat-label">Aging 90+ days</div>
+        <div class="stat-value mono" id="stat-aging">0</div>
+        <div class="stat-sub">Open 90+ days &mdash; needs attention</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="breakdown-section">
+    <h2 class="section-title">Breakdown</h2>
+    <div class="breakdown-grid">
+      <div>
+        <h3 class="breakdown-title">By priority</h3>
+        <div class="workload-card" id="priority-breakdown"></div>
+      </div>
+      <div>
+        <h3 class="breakdown-title">By status</h3>
+        <div class="workload-card" id="status-breakdown"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="workload-section">
+    <h2 class="section-title">Team Workload</h2>
+    <div class="legend">
+      <span class="legend-item"><span class="legend-swatch" style="background:var(--story)"></span>Stories</span>
+      <span class="legend-item"><span class="legend-swatch" style="background:var(--bug)"></span>Bugs</span>
+    </div>
+    <div class="workload-card" id="workload-card"></div>
+  </section>
+
+  <section id="detail-section">
+    <h2 class="section-title">Assignee Detail</h2>
+    <div class="detail-toolbar">
+      <input type="search" id="assignee-search" placeholder="Search by assignee name&hellip;" aria-label="Search by assignee name" />
+      <select id="type-filter" aria-label="Filter by issue type">
+        <option value="">All types</option>
+        <option value="Story">Stories</option>
+        <option value="Bug">Bugs</option>
+      </select>
+      <select id="priority-filter" aria-label="Filter by priority">
+        <option value="">All priorities</option>
+        <option value="Highest">Highest</option>
+        <option value="High">High</option>
+        <option value="Medium">Medium</option>
+        <option value="Low">Low</option>
+        <option value="Lowest">Lowest</option>
+      </select>
+      <select id="status-filter" aria-label="Filter by status">
+        <option value="">All statuses</option>
+      </select>
+      <select id="sort-select" aria-label="Sort tickets within each assignee">
+        <option value="age-desc">Oldest first</option>
+        <option value="age-asc">Newest first</option>
+        <option value="priority">By priority</option>
+        <option value="key">By key</option>
+      </select>
+      <span class="result-count" id="result-count"></span>
+    </div>
+    <div id="assignee-list"></div>
+  </section>
+
+  <footer>
+    Generated from the daily Jira export for <span class="mono">project = COS AND statusCategory != Done AND issuetype in (Story, Bug)</span>. Use &ldquo;Upload a newer file&rdquo; to preview a fresh export instantly in this browser &mdash; it won&rsquo;t change the published snapshot.
+  </footer>
+
+</div>
+<script id="board-data" type="application/json">[{"name": "Amjath", "stories": [{"key": "COS-7208", "summary": "PDF images to appear alongside the 3D model in CAD Viewer", "priority": "Medium", "status": "To Do", "due": 3}, {"key": "COS-7198", "summary": "Template enhancement for 3D laser process", "priority": "Medium", "status": "To Do", "due": 4}, {"key": "COS-7187", "summary": "Enhancement on Cavity simulation for Injection Molding", "priority": "Medium", "status": "To Do", "due": 5}, {"key": "COS-7141", "summary": "Enhancement on Machine automation for sheetmetal", "priority": "Medium", "status": "To Do", "due": 10}, {"key": "COS-6858", "summary": "Standard deviation is not taken from formula not from CAD", "priority": "Medium", "status": "To Do", "due": 24}, {"key": "COS-6777", "summary": "Add Export/Copy Functionality for Weld Details", "priority": "Medium", "status": "To Do", "due": 26}, {"key": "COS-6679", "summary": "Material section-(Masterbatch & UV) enhancement", "priority": "Medium", "status": "To Do", "due": 28}, {"key": "COS-6612", "summary": "Gas Assisted Injection Molding-Enhancement", "priority": "Medium", "status": "To Do", "due": 33}, {"key": "COS-6334", "summary": "Identify Machining Holes from CAD and Exclude Them from Cutting Time Calculation", "priority": "Medium", "status": "To Do", "due": 53}, {"key": "COS-3969", "summary": "Roto molding enhancement", "priority": "High", "status": "To Do", "due": 207}], "bugs": [{"key": "COS-7223", "summary": "Wet Painting and Masking Costing, QA, and Automation Issues", "priority": "High", "status": "To Do", "due": 3}]}, {"name": "Rosiya", "stories": [{"key": "COS-7191", "summary": "HPDC Tooling: Subsequent Tooling cost updated calculations to be incorporated.", "priority": "Medium", "status": "To Do", "due": 5}, {"key": "COS-7077", "summary": "(Zoho # 619), HPDC Process Cycle time calculations to be updated as per revised template.", "priority": "Medium", "status": "To Do", "due": 12}, {"key": "COS-7048", "summary": "Wrong Molding material selected for the No bake Casting.", "priority": "High", "status": "To Do", "due": 13}, {"key": "COS-7041", "summary": "Need to change the sequence of Core Printing process in shell casting", "priority": "Medium", "status": "To Do", "due": 13}, {"key": "COS-6967", "summary": "All casting process, Machine selection logic update", "priority": "Medium", "status": "To Do", "due": 18}, {"key": "COS-6779", "summary": "Need to add one more button in material section for the Casting category.", "priority": "High", "status": "To Do", "due": 26}, {"key": "COS-6670", "summary": "Core cad data to be populated in core viewer.", "priority": "Medium", "status": "To Do", "due": 28}, {"key": "COS-6507", "summary": "Manual Inspection Cycle time revised logic to be implemented.", "priority": "Medium", "status": "To Do", "due": 40}, {"key": "COS-6358", "summary": "No Bake Casting Tooling template to be implemented.", "priority": "Medium", "status": "To Do", "due": 49}, {"key": "COS-6009", "summary": "In Core preparation process, the machine selection logic needs to be updated, Need to sort core making machines in Green sand auto.", "priority": "Medium", "status": "To Do", "due": 74}], "bugs": []}, {"name": "Morgan", "stories": [{"key": "COS-7058", "summary": "Need to add Flat rack type shipment for Sea -mode of transport", "priority": "Medium", "status": "To Do", "due": 12}, {"key": "COS-6752", "summary": "Mass Upload of Data (Support with API Development)", "priority": "Medium", "status": "To Do", "due": 27}, {"key": "COS-5638", "summary": "Marmon  - Composition of PC & ABS", "priority": "Medium", "status": "To Do", "due": 98}, {"key": "COS-5577", "summary": "PCB Packaging - New packaging logic needs to be implemented", "priority": "Medium", "status": "To Do", "due": 102}, {"key": "COS-5020", "summary": "Sustainability details should reflect in Packaging and logistics too", "priority": "Highest", "status": "To Do", "due": 140}, {"key": "COS-4533", "summary": "HPDC Tooling section need to implement few enhancements as mentioned in description as asked by Lucid & Other clients.", "priority": "Medium", "status": "To Do", "due": 174}, {"key": "COS-3595", "summary": "Oshkosh | Hardware (across all business units), building catalog into tool (no models available)", "priority": "Medium", "status": "To Do", "due": 241}], "bugs": [{"key": "COS-6521", "summary": "Different materials are mapped as Similar material family.", "priority": "Highest", "status": "To Do", "due": 39}, {"key": "COS-6381", "summary": "Material Database Contains Incorrectly Combined Material Grades and Inconsistent Master Data", "priority": "Highest", "status": "To Do", "due": 48}, {"key": "COS-5395", "summary": "Flat price on EPDM material", "priority": "Medium", "status": "To Do", "due": 116}]}, {"name": "Akhila", "stories": [{"key": "COS-7081", "summary": "Add Color Coding for the Tooling Section when system input is manually changed across all commodities", "priority": "Medium", "status": "To Do", "due": 12}, {"key": "COS-6931", "summary": "Enhancement Request: Allow Right Notes Panel Access During AI Auto-Populate Current Behaviour", "priority": "Medium", "status": "To Do", "due": 19}, {"key": "COS-5590", "summary": "CLONE - Digital factory - Supplier profile development", "priority": "Medium", "status": "To Do", "due": 102}, {"key": "COS-5260", "summary": "Color bars: The color bar (blue) does not revert to green when the user selects the default value again from the dropdown.", "priority": "Medium", "status": "To Do", "due": 125}, {"key": "COS-4737", "summary": "Ford | Red / Yellow / Blue status and % Complete are not in sync for Material section", "priority": "Medium", "status": "Dev In Progress", "due": 159}, {"key": "COS-3696", "summary": "Digital factory Sync changes - UI", "priority": "Medium", "status": "To Do", "due": 229}], "bugs": []}, {"name": "Amrut", "stories": [{"key": "COS-5631", "summary": "Thermoforming & Vacuum forming process- Unfolding length calculation", "priority": "Medium", "status": "To Do", "due": 98}], "bugs": [{"key": "COS-6237", "summary": "Cad Extraction taking more time", "priority": "Highest", "status": "To Do", "due": 59}, {"key": "COS-6164", "summary": "Taking too much time to extract the part in Tool", "priority": "Highest", "status": "To Do", "due": 63}, {"key": "COS-5915", "summary": "CAD is taking more time to extract", "priority": "Medium", "status": "To Do", "due": 81}, {"key": "COS-4889", "summary": "Demo Project # 11484 Core details are extracted wrongly", "priority": "High", "status": "To Do", "due": 150}]}, {"name": "Kishan", "stories": [{"key": "COS-6554", "summary": "Support Multiple PDF Extraction Integration", "priority": "Medium", "status": "To Do", "due": 38}, {"key": "COS-5934", "summary": "Electronics- Enhancement is needed to view Doc, Docx and txt formats.", "priority": "High", "status": "To Do", "due": 80}, {"key": "COS-5444", "summary": "CLONE - Database - Manufacturing catalog - Development", "priority": "Medium", "status": "To Do", "due": 110}, {"key": "COS-3497", "summary": "Component Engineering UI", "priority": "Medium", "status": "To Do", "due": 252}], "bugs": []}, {"name": "Guhan", "stories": [{"key": "COS-7210", "summary": "Ultrasonic Testing: New machines need to add in DB", "priority": "Medium", "status": "To Do", "due": 3}], "bugs": [{"key": "COS-7202", "summary": "Cell Assembly is appearing 2 times", "priority": "High", "status": "To Do", "due": 4}, {"key": "COS-5989", "summary": "Fright cost is not calculating correctly for FOB incoterm.", "priority": "Medium", "status": "To Do", "due": 75}]}, {"name": "Sanapathi", "stories": [{"key": "COS-7049", "summary": "Need to populate Sub process also after clicking Auto populate in Casting", "priority": "Medium", "status": "To Do", "due": 13}, {"key": "COS-6905", "summary": "Event Admin Settings \u2014 Workflows & Templates", "priority": "Medium", "status": "To Do", "due": 20}, {"key": "COS-6080", "summary": "CLONE - Ai part similarity analysis - cluster view -Development", "priority": "Medium", "status": "To Do", "due": 69}], "bugs": []}, {"name": "Arun", "stories": [{"key": "COS-6791", "summary": "Metal Forming: Hot Forging - High Speed_New process implementation", "priority": "Medium", "status": "To Do", "due": 26}, {"key": "COS-6363", "summary": "Upset Forging - New Process Implementation", "priority": "Medium", "status": "To Do", "due": 49}], "bugs": []}, {"name": "Satyateja", "stories": [{"key": "COS-6233", "summary": "Duplicate api calls on Recalculation- Projectfiledproperties", "priority": "Medium", "status": "To Do", "due": 59}, {"key": "COS-5439", "summary": "Costing Suggestions (\u201cNeeds Review\u201d) Not Available for Manually Costed Projects", "priority": "Medium", "status": "To Do", "due": 110}], "bugs": []}, {"name": "Naveen", "stories": [{"key": "COS-6106", "summary": "Transferred Lot Size not Applied Correctly to Child Parts + Bulk Recalculation Not Working", "priority": "Highest", "status": "To Do", "due": 68}], "bugs": []}]</script>
+<script src="js/vendor/xlsx.full.min.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
