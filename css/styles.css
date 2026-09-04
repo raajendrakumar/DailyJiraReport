@@ -451,12 +451,6 @@ button.btn-sm, button.small {
   gap: 12px;
 }
 
-.preview-actions {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
 .preview-tag {
   font-size: var(--fs-2xs);
   font-weight: 800;

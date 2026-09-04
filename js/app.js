@@ -784,7 +784,12 @@
         loadData(grouped);
         document.getElementById('preview-filename').textContent = file.name;
         document.getElementById('preview-banner').classList.add('active');
-        showToast('Loaded ' + file.name);
+        var savedAt = saveReport(current, file.name);
+        if(savedAt){
+          var snapshotEl = document.getElementById('snapshot-date');
+          if(snapshotEl) snapshotEl.textContent = formatSnapshotDate(savedAt);
+        }
+        showToast('Saved ' + file.name + ' as the active snapshot');
       } catch(err){
         alert('Could not read "' + file.name + '". Make sure it is a valid Jira export containing Issue Type, Issue key, Summary, Assignee, Priority, Status, and Due Days.\n\nError: ' + err.message);
       }
@@ -883,19 +888,6 @@
       var snapshotEl = document.getElementById('snapshot-date');
       if(snapshotEl && ORIGINAL_SNAPSHOT_TEXT != null) snapshotEl.textContent = ORIGINAL_SNAPSHOT_TEXT;
       showToast('Reset to default snapshot');
-    });
-  }
-
-  var savePreviewBtn = document.getElementById('save-preview-btn');
-  if(savePreviewBtn){
-    savePreviewBtn.addEventListener('click', function(){
-      var filename = document.getElementById('preview-filename').textContent;
-      var savedAt = saveReport(current, filename);
-      if(!savedAt) return;
-      document.getElementById('preview-banner').classList.remove('active');
-      var snapshotEl = document.getElementById('snapshot-date');
-      if(snapshotEl) snapshotEl.textContent = formatSnapshotDate(savedAt);
-      showToast('Saved ' + filename + ' as the active snapshot');
     });
   }
 
