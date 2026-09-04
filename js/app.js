@@ -6,11 +6,48 @@
   var PRIORITY_ORDER = ['Highest', 'High', 'Medium', 'Low', 'Lowest'];
   var JIRA_BASE_URL = 'https://truevaluehub.atlassian.net/browse/';
 
+  var SAVED_REPORT_KEY = 'tvh_saved_report';
+
   var rawBoardData = document.getElementById('board-data');
   var DEFAULT_DATA = rawBoardData ? JSON.parse(rawBoardData.textContent) : [];
+  var ORIGINAL_SNAPSHOT_TEXT = null;
   var current = DEFAULT_DATA;
   var openState = Object.create(null);
   var activeAgingFilter = null; // null | 90 | 30
+
+  function loadSavedReport(){
+    try {
+      var raw = localStorage.getItem(SAVED_REPORT_KEY);
+      return raw ? JSON.parse(raw) : null;
+    } catch(err){
+      return null;
+    }
+  }
+
+  function saveReport(data, filename){
+    var savedAt = new Date();
+    try {
+      localStorage.setItem(SAVED_REPORT_KEY, JSON.stringify({
+        data: data,
+        filename: filename,
+        savedAt: savedAt.toISOString()
+      }));
+    } catch(err){
+      alert('Could not save data locally: ' + err.message);
+      return null;
+    }
+    return savedAt;
+  }
+
+  function clearSavedReport(){
+    try { localStorage.removeItem(SAVED_REPORT_KEY); } catch(err){ /* ignore */ }
+  }
+
+  function formatSnapshotDate(date){
+    var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    var day = String(date.getDate()).padStart(2, '0');
+    return day + ' ' + months[date.getMonth()] + ' ' + date.getFullYear();
+  }
 
   // -------------------------------------------------------------
   // Theme Management
@@ -840,15 +877,42 @@
   var resetPreviewBtn = document.getElementById('reset-preview');
   if(resetPreviewBtn){
     resetPreviewBtn.addEventListener('click', function(){
+      clearSavedReport();
       loadData(DEFAULT_DATA);
       document.getElementById('preview-banner').classList.remove('active');
+      var snapshotEl = document.getElementById('snapshot-date');
+      if(snapshotEl && ORIGINAL_SNAPSHOT_TEXT != null) snapshotEl.textContent = ORIGINAL_SNAPSHOT_TEXT;
       showToast('Reset to default snapshot');
+    });
+  }
+
+  var savePreviewBtn = document.getElementById('save-preview-btn');
+  if(savePreviewBtn){
+    savePreviewBtn.addEventListener('click', function(){
+      var filename = document.getElementById('preview-filename').textContent;
+      var savedAt = saveReport(current, filename);
+      if(!savedAt) return;
+      document.getElementById('preview-banner').classList.remove('active');
+      var snapshotEl = document.getElementById('snapshot-date');
+      if(snapshotEl) snapshotEl.textContent = formatSnapshotDate(savedAt);
+      showToast('Saved ' + filename + ' as the active snapshot');
     });
   }
 
   // -------------------------------------------------------------
   // Bootstrap Application
   // -------------------------------------------------------------
+  var savedReport = loadSavedReport();
+  if(savedReport && savedReport.data){
+    current = savedReport.data;
+  }
+  var snapshotDateEl = document.getElementById('snapshot-date');
+  if(snapshotDateEl){
+    ORIGINAL_SNAPSHOT_TEXT = snapshotDateEl.textContent;
+    if(savedReport && savedReport.savedAt){
+      snapshotDateEl.textContent = formatSnapshotDate(new Date(savedReport.savedAt));
+    }
+  }
   initTheme();
   initQuickFilters();
   initStatCardClicks();
