@@ -1,56 +1,42 @@
 # Daily Jira Bugs & Stories Report
 
-A static, single-page dashboard that shows open Stories and Bugs from the
-`COS` Jira project, grouped by assignee. Built for the TrueValueHub
-engineering team's daily standup snapshot.
+A responsive, high-performance daily dashboard that displays open Stories and Bugs from the `COS` Jira project grouped by assignee. Designed for the TrueValueHub engineering team's daily standup meetings.
 
-**Live view:** https://raajendrakumar.github.io/DailyJiraReport/ (GitHub
-Pages, served from `main`), or open [`index.html`](index.html) directly in
-a browser.
+**Live view:** https://raajendrakumar.github.io/DailyJiraReport/ (or open [`index.html`](index.html) directly in any modern browser).
 
 ## Features
 
-- Snapshot stats: open stories, open bugs, total open items, assignee count,
-  and items open 90+ days
-- Breakdown charts by priority and by status
-- Per-assignee workload bar chart (stories vs. bugs) with avatar initials,
-  glossy gradient bars, a hover highlight, and a grow-in animation on load
-- Expandable per-assignee ticket tables with key, summary, priority, status,
-  and days-open — rows aged 30+/90+ days are color-highlighted, and an
-  "N aging" chip appears on affected assignees
-- Search by assignee name, filter by issue type/priority/status, and sort
-  each assignee's tickets (oldest/newest first, by priority, or by key)
-- Export the currently filtered tickets to CSV, or print/save as PDF (the
-  print stylesheet expands all cards and hides interactive controls)
-- "Upload a newer file" — drop in a fresh Jira export (`.xlsx`, `.xls`, or
-  `.csv`) to preview it instantly in the browser, without publishing or
-  touching the committed snapshot
+- **Snapshot KPI Tiles**: Quick metrics for open stories, open bugs, total open items, assignee count, and critical aging (90+ days). Clicking tiles filters the dashboard instantly.
+- **Interactive Breakdown Charts**: Visual breakdown distributions by priority and status. Clicking any bar instantly filters all ticket views.
+- **Team Workload Bar Chart**: Per-assignee breakdown of stories vs. bugs with avatar initials, gradient proportional bars, and load animations.
+- **Smart Universal Search**: Search across assignee names, ticket keys (e.g. `COS-7208`), and summary keywords simultaneously. Matching cards auto-expand.
+- **Quick-Filter Presets**: 1-click pills for *All Items*, *Bugs Only*, *Stories Only*, *Aging 90+ Days (Critical)*, *Aging 30-89 Days (Warning)*, and *Priority Levels*.
+- **Direct Jira Deep Links & Quick Copy**: Click any ticket key to open directly in Jira (`https://truevaluehub.atlassian.net/browse/COS-...`) or use the one-click copy button to copy key & summary to clipboard for standup notes.
+- **Expand All / Collapse All**: Toggle all assignee ticket cards with a single button.
+- **Dark / Light Theme Toggle**: Seamless switching between light and dark modes with persistent local preferences.
+- **Dual Export (CSV & Excel .xlsx)**: Export currently filtered tickets directly to formatted CSV or Excel workbook using SheetJS.
+- **Drag & Drop Instant Preview**: Drag and drop any `.xlsx`, `.xls`, or `.csv` export anywhere onto the page to preview without modifying the base snapshot.
+- **Print & PDF Layout**: Clean print stylesheet formatted for PDF reporting and sharing.
 
-## Project structure
+## Project Structure
 
 ```
-index.html          Page markup + the published data snapshot
-css/styles.css       Design tokens and layout (light/dark theme via prefers-color-scheme)
-js/app.js            Rendering, search, and file-upload/parsing logic
-js/vendor/xlsx.full.min.js   SheetJS, used to parse uploaded .xlsx/.xls files
+index.html                  Page structure, UI layout, and default JSON snapshot
+css/styles.css              Modern design tokens, dark/light themes, animations, print styles
+js/app.js                   Filtering, universal search, chart rendering, exports, drag & drop
+js/vendor/xlsx.full.min.js   SheetJS library for parsing and exporting Excel workbooks
 ```
 
-## Updating the published snapshot
+## Updating the Snapshot Data
 
-The snapshot data lives inline in `index.html` inside
-`<script id="board-data" type="application/json">`. To publish a new day's
-export, replace that JSON array with data grouped the same way: one object
-per assignee with `name`, `stories[]`, and `bugs[]`, where each ticket has
-`key`, `summary`, `priority`, `status`, and `due` (days until/since due).
+The default daily snapshot is embedded in `index.html` inside:
+```html
+<script id="board-data" type="application/json">
+[ ... ]
+</script>
+```
+To update the baseline snapshot, replace the JSON array with data formatted with `name`, `stories[]`, and `bugs[]` (`key`, `summary`, `priority`, `status`, and `due` days).
 
-The expected Jira export columns (used by the in-browser upload/preview
-feature) are: `Issue Type`, `Issue key`, `Summary`, `Assignee`, `Priority`,
-`Status`, `Due Days`.
+## Local Development
 
-The aging thresholds (`AGE_WARN` = 30 days, `AGE_CRITICAL` = 90 days) are
-constants at the top of `js/app.js`.
-
-## Local development
-
-No build step — it's plain HTML/CSS/JS. Open `index.html` directly in a
-browser, or run any static file server from this directory.
+Zero external build steps required. Simply open `index.html` in your browser or run a lightweight local static web server.
