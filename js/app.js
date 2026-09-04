@@ -138,15 +138,41 @@
     };
   }
 
+  function animateNumber(elementId, targetValue){
+    var el = document.getElementById(elementId);
+    if(!el) return;
+    var start = parseInt(el.textContent, 10) || 0;
+    var target = parseInt(targetValue, 10) || 0;
+    if(start === target){
+      el.textContent = target;
+      return;
+    }
+    var duration = 350;
+    var startTime = null;
+    function step(timestamp){
+      if(!startTime) startTime = timestamp;
+      var progress = Math.min((timestamp - startTime) / duration, 1);
+      var ease = 1 - Math.pow(1 - progress, 3);
+      var currentVal = Math.round(start + (target - start) * ease);
+      el.textContent = currentVal;
+      if(progress < 1){
+        requestAnimationFrame(step);
+      } else {
+        el.textContent = target;
+      }
+    }
+    requestAnimationFrame(step);
+  }
+
   function renderStats(data){
     var s = computeStats(data);
-    document.getElementById('stat-stories').textContent = s.stories;
-    document.getElementById('stat-bugs').textContent = s.bugs;
-    document.getElementById('stat-total').textContent = s.total;
-    document.getElementById('stat-assignees').textContent = s.assignees;
+    animateNumber('stat-stories', s.stories);
+    animateNumber('stat-bugs', s.bugs);
+    animateNumber('stat-total', s.total);
+    animateNumber('stat-assignees', s.assignees);
     document.getElementById('stat-assignees-sub').textContent = s.hasUnassigned ? 'Named owners (+ Unassigned)' : 'Named owners';
     var agingEl = document.getElementById('stat-aging');
-    agingEl.textContent = s.aging;
+    animateNumber('stat-aging', s.aging);
     agingEl.classList.toggle('alert', s.aging > 0);
   }
 
