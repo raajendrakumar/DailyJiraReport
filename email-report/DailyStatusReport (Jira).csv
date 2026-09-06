@@ -1,0 +1,175 @@
+﻿Issue Type,Issue key,Summary,Assignee,Reporter,Priority,Status,Created,Updated,Due Days
+Task,COS-7444,Changes need in Machine Data,Guhan,Jaya Raju Chennu,High,To Do,04-09-2026 08:54,04-09-2026 08:54,2
+Bug,COS-7443,Unfolded view is incorrect_04/09/26,Amrut,Thrinadh Battagiri,Medium,To Do,04-09-2026 08:16,04-09-2026 08:16,2
+Bug,COS-7441,Oshkosh | Welding Notes not getting copied in New  Scenario,Satyateja,Rajendra.Kumar,Medium,To Do,04-09-2026 08:03,04-09-2026 09:28,2
+Bug,COS-7440,"Tool not Extracting the category correctly hence we do re extraction , After Re Extraction the AI costing notes are coming wrong ",Arun,Maheshgoud Patil,High,To Do,04-09-2026 07:50,04-09-2026 08:04,2
+Bug,COS-7439,Scrap Price ($/Kg) is more than Material Price ($/Kg) ,Guhan,Keerthi Bhushan,Highest,To Do,04-09-2026 07:46,04-09-2026 07:46,2
+Bug,COS-7438,Part Re-extraction Updates Only Manufacturing Category,Arun,Santhosh Kumar S,Highest,To Do,04-09-2026 07:39,04-09-2026 07:39,2
+Story,COS-7437,Buyer Flow Observations,Sanapathi,Tejovathi,Medium,To Do,04-09-2026 07:37,04-09-2026 07:37,2
+Task,COS-7436,Migration changes - bugs,Satyateja,SatyaTeja,Medium,To Do,04-09-2026 07:34,04-09-2026 07:41,2
+Bug,COS-7433,"Auto population is pulling wrong material, other than suggested material",Sanapathi,Rohith Krishna,High,To Do,04-09-2026 06:59,04-09-2026 08:45,2
+Bug,COS-7431,The Cost is not getting calculated for Screen Printing Custom Machine ,Kishan,Keerthi Bhushan,High,To Do,04-09-2026 06:32,04-09-2026 07:49,2
+Bug,COS-7418,"POC : Phillps CAD files not extracting properly , #DEMO Project : 16667 , 16668 ",Amrut,Maheshgoud Patil,Medium,To Do,04-09-2026 03:06,04-09-2026 03:22,2
+Bug,COS-7416,Weld details mismatch in SMAW and TIG welding,Amjath,AKARSH K,Highest,Dev In Progress,04-09-2026 03:00,04-09-2026 03:52,2
+Task,COS-7414,Analyze Ford environment files failing/empty/no children parts (investigate root cause),Amrut,Amrut Pujari,Medium,Dev In Progress,04-09-2026 00:55,04-09-2026 00:55,2
+Bug,COS-7411,"Number cavity for Bigger Parts is not Matching as per the Logic sheet provided , which is causing Process is not selecting the machine because of oversize of Tool",Amjath,Maheshgoud Patil,Highest,To Do,03-09-2026 08:56,04-09-2026 01:41,3
+Bug,COS-7407,Scrap Price ($/Kg) is more than Material Price ($/Kg) ,Guhan,Keerthi Bhushan,High,To Do,03-09-2026 07:48,03-09-2026 08:06,3
+Bug,COS-7404,Extraction Progress UI – Extraction Status Displayed as “Undefined”,Kishan,Rajendra.Kumar,Medium,Dev In Progress,03-09-2026 07:02,03-09-2026 09:09,3
+Story,COS-7398,(Zoho # 812) HPDC UI Layout to be updated as per updated template,Rosiya,Manjunath Nagoji,Medium,To Do,03-09-2026 04:42,04-09-2026 01:22,3
+Task,COS-7394,Need to update the Investment Casting Logics based on Updated template,Rosiya,Rohith Krishna,High,To Do,03-09-2026 03:18,04-09-2026 01:21,3
+Bug,COS-7386,PPE+PA-GF10 material price is coming less than scrap price,Morgan,Balaji Sundararajan,Highest,To Do,03-09-2026 01:03,03-09-2026 01:03,3
+Task,COS-7381,Testing and Verification of Casting Migration,Rosiya,Rosiya Paulson,Medium,Dev In Progress,02-09-2026 09:23,03-09-2026 08:41,4
+Story,COS-7380,Core Cavity Logic Update and Layout changes in Shell Casting Process,Rosiya,Rohith Krishna,Medium,To Do,02-09-2026 09:06,02-09-2026 09:06,4
+Bug,COS-7378,Shows console error intermitently ,Naveen,Vipin Joseph,Medium,To Do,02-09-2026 08:29,04-09-2026 09:28,4
+Task,COS-7377,Supplier directory in Digital factory UI,Akhila,Akhila Mohan C M,Medium,Dev In Progress,02-09-2026 08:25,03-09-2026 08:31,4
+Story,COS-7369,Average Part Thickness from maximum occurrence value need to be saved in backend along with current Part data.,Rosiya,Manjunath Nagoji,Medium,To Do,02-09-2026 04:40,03-09-2026 08:09,4
+Bug,COS-7363,Error is coming when we are costing rubber parts,Guhan,Balaji Sundararajan,Highest,To Do,02-09-2026 01:12,02-09-2026 04:50,4
+Task,COS-7360,Create template in settings screen - UI ,Akhila,Akhila Mohan C M,Medium,To Do,01-09-2026 10:55,02-09-2026 08:37,5
+Bug,COS-7349,Shows 500 error upon selecting certain grades,Morgan,Vipin Joseph,High,To Do,01-09-2026 04:53,02-09-2026 04:50,5
+Bug,COS-7340,"USA Region – Material Price and Scrap Price Are Too High, Impacting Net Material Cost",Morgan,Keerthi Bhushan,High,To Do,01-09-2026 01:10,02-09-2026 04:50,5
+Bug,COS-7333,CAD Extraction Overestimates Part Volume After Unfolded Geometry Fix,Amrut,Thrinadh Battagiri,Medium,To Do,31-08-2026 06:16,02-09-2026 04:50,6
+Bug,COS-7423,AI Similarity search taking time to load ,Sanapathi,Vipin Joseph,Medium,Dev In Progress,28-08-2026 08:30,04-09-2026 05:56,9
+Story,COS-7297,Ultrasonic machine data  changes and Updates,Guhan,Jaya Raju Chennu,High,To Do,27-08-2026 05:25,02-09-2026 04:50,10
+Task,COS-7296,FAMILY MOLD COST TEMPLATE,Amjath,Maheshgoud Patil,Medium,To Do,27-08-2026 04:55,03-09-2026 12:37,10
+Task,COS-7295,GAS INJECTION MOLDING COST TEMPLATE,Amjath,Maheshgoud Patil,Medium,To Do,27-08-2026 04:54,03-09-2026 08:27,10
+Task,COS-7294,3 SHOT INJECTION MOLDING COST TEMPLATE,Amjath,Maheshgoud Patil,High,To Do,27-08-2026 04:51,03-09-2026 12:37,10
+Task,COS-7291,DB - Master Query Execution,Amjath,Amjath Ali,Medium,Dev In Progress,27-08-2026 00:40,27-08-2026 00:41,10
+Story,COS-7269,Manual Inspection process to be implemented across mechanical commodities.,Rosiya,Manjunath Nagoji,Medium,On Hold,25-08-2026 06:35,27-08-2026 01:35,12
+Story,COS-7268,Annealing Process: Updates Required,Satyateja,Sandeep Kumar Verma,Medium,Reopened,25-08-2026 06:16,04-09-2026 05:30,12
+Story,COS-7267,Flag low-confidence matches in red in 'Costing Notes Summary' so estimators know to check,Sanapathi,Syed Shihabuddin,Medium,To Do,25-08-2026 05:59,02-09-2026 11:54,12
+Task,COS-7262,Add CMM machines into Data base,Guhan,Ashok D,Medium,To Do,25-08-2026 05:19,02-09-2026 04:50,12
+Story,COS-7256,"Forging Machine selection Automation (Mechanical Press, Hydraulic Press and Hammer).",Arun,Syed Shihabuddin,Medium,To Do,25-08-2026 03:03,03-09-2026 07:46,12
+Bug,COS-7252,Cad extraction failed for the lucid part.,Amrut,Manjunath Nagoji,High,Reopened,25-08-2026 01:31,28-08-2026 03:01,12
+Bug,COS-7248,Cad extracted as single part and not created the BOM for assembly file.,Amrut,Manjunath Nagoji,High,Reopened,25-08-2026 00:22,28-08-2026 03:02,12
+Story,COS-7247,[Zoho 759] - Add Overhead Field for Make vs Buy,Kishan,Morgan Blubaugh,Medium,To Do,24-08-2026 21:24,02-09-2026 11:31,13
+Bug,COS-7238,"In Oshkosh overview page, some data shows overlapped  ",Morgan,Vipin Joseph,High,To Do,24-08-2026 07:13,02-09-2026 04:50,13
+Story,COS-7222,Make Wet Painting Generic Across Commodities and Improve Material/Masking Defaults,Amjath,Thrinadh Battagiri,Medium,To Do,21-08-2026 07:42,27-08-2026 06:57,16
+Task,COS-7217,"Ford Zoho # 246 , Development of Metal Injection Molding Template (Thixomolding)",Amjath,Maheshgoud Patil,Medium,To Do,21-08-2026 05:39,03-09-2026 12:37,16
+Task,COS-7214,Fix bugs in migrated Angular-to-backend calculations,Naveen,Naveen Kumar Reddy,Medium,To Do,21-08-2026 03:19,25-08-2026 05:42,16
+Story,COS-7210,Ultrasonic Testing: New machines need to add in DB ,Guhan,Manjunath Nagoji,Medium,To Do,21-08-2026 01:47,27-08-2026 06:49,16
+Story,COS-7208,PDF images to appear alongside the 3D model in CAD Viewer,Sanapathi,Vinay Narayana Rao,Medium,To Do,21-08-2026 01:29,04-09-2026 01:29,16
+Task,COS-7200,UI/UX Readability/Accessibility,Akhila,Vipin Joseph,Medium,To Do,20-08-2026 03:59,03-09-2026 08:05,17
+Bug,COS-7199,Shotblasting process cycle time is not calculating.,Rosiya,Manjunath Nagoji,High,On Hold,20-08-2026 03:44,26-08-2026 07:57,17
+Story,COS-7198,Template enhancement for 3D laser process,Amjath,AKARSH K,Medium,To Do,20-08-2026 03:25,03-09-2026 12:37,17
+Story,COS-7191,HPDC Tooling: Subsequent Tooling cost updated calculations to be incorporated.,Rosiya,Manjunath Nagoji,Medium,To Do,19-08-2026 09:47,04-09-2026 01:21,18
+Story,COS-7187,Enhancement on Cavity simulation for Injection Molding,Amjath,Balaji Sundararajan,Medium,To Do,19-08-2026 06:49,03-09-2026 12:37,18
+Story,COS-7168,"Demo Project # 13626/17134/72212, core preparation process is adding without core material data.",Rosiya,Manjunath Nagoji,Medium,To Do,18-08-2026 02:27,24-08-2026 09:09,19
+Story,COS-7166,Passivation template development,Amjath,Thrinadh Battagiri,Medium,To Do,18-08-2026 01:51,03-09-2026 12:37,19
+Story,COS-7141,Enhancement on Machine automation for sheetmetal ,Amjath,Vipin Joseph,Medium,To Do,14-08-2026 09:49,03-09-2026 12:37,23
+Bug,COS-7140,Incomplete data extraction from the 3D,Amrut,AKARSH K,High,On Hold,14-08-2026 09:42,20-08-2026 08:14,23
+Bug,COS-7119,ABS material price is coming high for India scenario,Morgan,Balaji Sundararajan,Highest,Dev In Progress,13-08-2026 07:39,26-08-2026 07:57,24
+Story,COS-7115,Change Standard Equipment Depreciation,Morgan,Morgan Blubaugh,Medium,To Do,13-08-2026 06:20,26-08-2026 07:57,24
+Story,COS-7114,Monthly Change Summary,Morgan,Morgan Blubaugh,Medium,To Do,13-08-2026 06:18,02-09-2026 02:10,24
+Story,COS-7113,Revise Site/Supplier Names,Morgan,Morgan Blubaugh,Medium,To Do,13-08-2026 06:14,26-08-2026 07:57,24
+Story,COS-7111,Packaging & Logistics Enhancement,Morgan,Morgan Blubaugh,Medium,To Do,13-08-2026 06:10,26-08-2026 07:57,24
+Story,COS-7101,Improvemnt on - New proposed enhancements: Export CBOM into a single Excel file from (Bill of Material Analysis) section.,Akhila,Hemaranjith,Medium,To Do,13-08-2026 02:31,03-09-2026 08:06,24
+Story,COS-7087, Process to be added - plate leveler,Arun,Thrinadh Battagiri,Medium,To Do,12-08-2026 07:48,04-09-2026 02:25,25
+Story,COS-7081, Add Color Coding for the Tooling Section when system input is manually changed across all commodities,Akhila,Syed Shihabuddin,Medium,To Do,12-08-2026 06:48,03-09-2026 08:09,25
+Story,COS-7078,"(Zoho # 369), Ultra Testing Process to be implemented (New Testing Process)",Rosiya,Manjunath Nagoji,Medium,Dev In Progress,12-08-2026 06:34,03-09-2026 06:48,25
+Story,COS-7077,"(Zoho # 619), HPDC Process Cycle time calculations to be updated as per revised template.",Rosiya,Manjunath Nagoji,Medium,To Do,12-08-2026 06:26,04-09-2026 01:20,25
+Story,COS-7058,Need to add Flat rack type shipment for Sea -mode of transport ,Morgan,Vipin Joseph,Medium,To Do,12-08-2026 02:11,24-08-2026 02:50,25
+Task,COS-7056,Tooltips for Custom Machines,Akhila,guhan.kathiroli,Medium,To Do,12-08-2026 01:28,03-09-2026 08:08,25
+Story,COS-7049,Need to populate Sub process also after clicking Auto populate in Casting,Sanapathi,Rohith Krishna,Medium,To Do,11-08-2026 08:09,04-09-2026 01:17,26
+Story,COS-7048,Wrong Molding material selected for the No bake Casting.,Rosiya,Manjunath Nagoji,High,To Do,11-08-2026 07:25,03-09-2026 12:23,26
+Story,COS-7043,Consolidate Repeated Sub-Parts Across BOM for Setup and Lot Size Calculation,Naveen,Thrinadh Battagiri,Medium,To Do,11-08-2026 05:42,04-09-2026 01:19,26
+Story,COS-7041,Need to change the sequence of Core Printing process in shell casting,Rosiya,Rohith Krishna,Medium,To Do,11-08-2026 05:06,04-09-2026 01:20,26
+Story,COS-6967,"All casting process, Machine selection logic update",Rosiya,Rohith Krishna,Medium,To Do,06-08-2026 02:46,03-09-2026 12:23,31
+Story,COS-6966,Should cost in Competitive analysis and costed project need to match,Rosiya,Vipin Joseph,Medium,On Hold,06-08-2026 02:08,26-08-2026 07:57,31
+Task,COS-6960,Custom Payment Terms,Kishan,Morgan Blubaugh,Medium,To Do,05-08-2026 21:22,02-09-2026 11:32,32
+Task,COS-6959,[Zoho 682] Spec Sheets for Custom Materials / Screens,Satyateja,Morgan Blubaugh,Low,To Do,05-08-2026 20:55,02-09-2026 04:50,32
+Story,COS-6931,Enhancement Request: Allow Right Notes Panel Access During AI Auto-Populate Current Behaviour,Akhila,AKARSH K,Medium,To Do,05-08-2026 05:17,22-08-2026 21:53,32
+Bug,COS-6922,Chloroprene rubber price is coming too low,Morgan,Balaji Sundararajan,Highest,Dev In Progress,05-08-2026 01:40,26-08-2026 07:57,32
+Story,COS-6915,Cost Completion % Does Not Correctly Consider Incoterms and Child Part Costing Status,Akhila,Thrinadh Battagiri,Medium,To Do,04-08-2026 06:58,31-08-2026 06:52,33
+Story,COS-6905,Event Admin Settings — Workflows & Templates,Sanapathi,Prasad Karani,Medium,To Do,04-08-2026 01:30,02-09-2026 12:00,33
+Story,COS-6904,"RFQ- Creation, Validation, Publish",Sanapathi,Prasad Karani,Medium,Dev In Progress,04-08-2026 01:28,02-09-2026 04:40,33
+Story,COS-6858,Standard deviation is not taken from formula not from CAD,Amjath,Balaji Sundararajan,Medium,To Do,31-07-2026 02:37,22-08-2026 21:53,37
+Bug,COS-6832,CAD extraction issues (unbend detentions + thickness),Amrut,Thrinadh Battagiri,Medium,On Hold,30-07-2026 07:27,01-09-2026 07:50,38
+Story,COS-6801,Calculation Transparency,Akhila,Syed Shihabuddin,Medium,To Do,29-07-2026 08:23,27-08-2026 22:08,39
+Story,COS-6791,Metal Forming: Hot Forging - High Speed_New process implementation,Arun,Syed Shihabuddin,Medium,To Do,29-07-2026 06:25,03-09-2026 07:42,39
+Story,COS-6779,Need to add one more button in material section for the Casting category.,Rosiya,Manjunath Nagoji,High,To Do,29-07-2026 04:59,04-09-2026 01:20,39
+Story,COS-6777,Add Export/Copy Functionality for Weld Details,Naveen,Thrinadh Battagiri,Medium,To Do,29-07-2026 03:31,03-09-2026 12:48,39
+Bug,COS-6770,Target Manufacturing Region and Current Supplier Name not picked from upload template,Morgan,AKARSH K,Medium,Reopened,29-07-2026 01:31,31-08-2026 06:31,39
+Story,COS-6767,IM- Tab Coloring issue,Akhila,Keerthi Bhushan,High,On Hold,28-07-2026 09:18,22-08-2026 21:52,40
+Story,COS-6765,Heat Treatment_Case Hardening-Nitrocarburizing: New process implementation,Satyateja,Sandeep Kumar Verma,Medium,To Do,28-07-2026 08:33,03-09-2026 07:46,40
+Story,COS-6764,Heat Treatment_Case Hardening-Carbonitriding: New process implementation,Satyateja,Sandeep Kumar Verma,Medium,To Do,28-07-2026 08:28,03-09-2026 07:48,40
+Story,COS-6752,Mass Upload of Data (Support with API Development)  ,Morgan,Naveen Kumar Reddy,Medium,To Do,28-07-2026 05:59,24-08-2026 12:23,40
+Story,COS-6751,(Zoho # 613) Machine efficiency values to be maintained as estimated values.,Morgan,Manjunath Nagoji,Highest,To Do,28-07-2026 05:55,02-09-2026 04:49,40
+Story,COS-6740,Heat Treatment_Nitriding: New process implementation,Satyateja,SatyaTeja,Medium,Dev In Progress,28-07-2026 05:31,04-09-2026 05:56,40
+Story,COS-6737,Heat Treatment_Induction Hardening: New process implementation,Satyateja,SatyaTeja,Medium,To Do,28-07-2026 05:24,03-09-2026 07:48,40
+Story,COS-6728,The annualized Child BOM quantity appears to be calculated incorrectly,Amrut,Tejovathi,Medium,To Do,28-07-2026 05:00,26-08-2026 07:57,40
+Story,COS-6717,Angular to Backend Calculation Migration: Plastic & Rubber,Amjath,Sanapathi Chiluku Naidu,Medium,Dev In Progress,28-07-2026 04:57,03-09-2026 00:32,40
+Story,COS-6709,Commonize Visual/Manual inspection template,Rosiya,Thrinadh Battagiri,Medium,On Hold,28-07-2026 03:40,04-09-2026 04:05,40
+Story,COS-6707,version upgrade_sheet metal & fab: Load/unload operator count & labor type,Amjath,Thrinadh Battagiri,Medium,To Do,28-07-2026 03:38,04-09-2026 03:29,40
+Bug,COS-6702,Cad Extracted Wall thickness values are showing difference aross Environments and Manufacturing categories for same part,Amrut,Rohith Krishna,High,To Do,28-07-2026 02:39,02-09-2026 04:49,40
+Story,COS-6679,Material section-(Masterbatch & UV) enhancement,Amjath,Balaji Sundararajan,Medium,To Do,27-07-2026 05:00,22-08-2026 21:52,41
+Story,COS-6670,Core cad data to be populated in core viewer.,Rosiya,Manjunath Nagoji,Medium,To Do,27-07-2026 01:29,03-09-2026 12:23,41
+Story,COS-6664,Plastic Painting process Template,Amjath,Maheshgoud Patil,High,To Do,24-07-2026 06:56,04-09-2026 03:41,44
+Bug,COS-6624,Part Outer Diameter Value Appears Different from Actual Component Diameter,Amrut,Selvakumar N,Highest,On Hold,23-07-2026 04:52,26-08-2026 07:57,45
+Story,COS-6612,Gas Assisted Injection Molding-Enhancement,Amjath,Balaji Sundararajan,Medium,To Do,22-07-2026 09:01,22-08-2026 21:52,46
+Story,COS-6566,Packaging time is coming default for all parts in Injection Molding ,Morgan,Balaji Sundararajan,Highest,To Do,20-07-2026 08:59,02-09-2026 04:49,48
+Story,COS-6554,Support Multiple PDF Extraction Integration,Kishan,Rajendra.Kumar,Medium,To Do,17-07-2026 09:12,22-08-2026 21:52,51
+Story,COS-6521,Different materials are mapped as Similar material family.,Morgan,Manjunath Nagoji,Highest,To Do,16-07-2026 06:38,02-09-2026 04:49,52
+Task,COS-6983,Support .cgm and .tif file formats in the application,Kishan,vinutha suresh,Medium,To Do,16-07-2026 03:21,02-09-2026 11:32,52
+Story,COS-6507,Manual Inspection Cycle time revised logic to be implemented. ,Rosiya,Manjunath Nagoji,Medium,To Do,15-07-2026 08:28,03-09-2026 12:23,53
+Bug,COS-6471,Material is price is too low please update the latest price,Morgan,Maheshgoud Patil,Highest,Dev In Progress,14-07-2026 05:38,26-08-2026 07:57,54
+Story,COS-6456,Metal Forming: Layout Update Including Few Enhancements,Arun,Sandeep Kumar Verma,Medium,Dev In Progress,13-07-2026 06:00,04-09-2026 06:11,55
+Story,COS-6441,Mass recalculation for new scenarios. Currently when change is made each item needs to be recalculated independently.,Naveen,Syed Shihabuddin,Medium,To Do,13-07-2026 01:17,04-09-2026 01:16,55
+Bug,COS-6428,"Oshkosh | CAD Extraction Issue – Thickness Not Extracted, Resulting in Incorrect Material Cost and Manufacturing Cost",Amrut,Rajendra.Kumar,Medium,On Hold,09-07-2026 07:12,10-07-2026 06:22,59
+Bug,COS-6381,Material Database Contains Incorrectly Combined Material Grades and Inconsistent Master Data,Morgan,Thrinadh Battagiri,Highest,To Do,07-07-2026 07:12,02-09-2026 04:49,61
+Story,COS-6363,Upset Forging - New Process Implementation,Arun,Sandeep Kumar Verma,Medium,To Do,06-07-2026 06:57,03-09-2026 07:39,62
+Story,COS-6358,No Bake Casting Tooling template to be implemented.,Rosiya,Manjunath Nagoji,Medium,To Do,06-07-2026 03:19,03-09-2026 12:23,62
+Story,COS-6334,Identify Machining Holes from CAD and Exclude Them from Cutting Time Calculation,Amjath,Thrinadh Battagiri,Medium,To Do,02-07-2026 08:12,22-08-2026 21:52,66
+Story,COS-6269,Roll Forging: Feedback and changes based on testing,Arun,arun.rk,Medium,Reopened,30-06-2026 02:27,04-09-2026 10:12,68
+Story,COS-6218,Tube Profile Identification During CAD Extraction,Amrut,Thrinadh Battagiri,High,Dev In Progress,25-06-2026 05:21,03-09-2026 05:56,73
+Bug,COS-6164,Taking too much time to extract the part in Tool,Amrut,Balaji Sundararajan,Highest,To Do,22-06-2026 07:55,02-09-2026 04:49,76
+Story,COS-6121,Weld bead identification from 3D,Amjath,Vinay Narayana Rao,Medium,Dev In Progress,18-06-2026 03:11,04-09-2026 08:36,80
+Story,COS-6080,CLONE - Ai part similarity analysis - cluster view -Development,Sanapathi,Akhila Mohan C M,Medium,To Do,16-06-2026 06:47,26-08-2026 08:36,82
+Story,COS-6025,Fine Blanking template development,Amjath,Thrinadh Battagiri,Medium,To Do,11-06-2026 07:17,27-08-2026 22:05,87
+Story,COS-6009,"In Core preparation process, the machine selection logic needs to be updated, Need to sort core making machines in Green sand auto.",Rosiya,Rohith Krishna,Medium,To Do,11-06-2026 02:24,03-09-2026 12:23,87
+Bug,COS-5951,Oshkosh | CATPart and CATProduct Files Not Loading,Amrut,Rajendra.Kumar,Medium,On Hold,08-06-2026 07:07,11-08-2026 09:54,90
+Story,COS-5934,"Electronics- Enhancement is needed to view Doc, Docx and txt formats.",Kishan,Manoj Bhat,High,To Do,05-06-2026 05:55,02-09-2026 11:32,93
+Bug,COS-5915,CAD is taking more time to extract,Amrut,Balaji Sundararajan,Medium,To Do,04-06-2026 04:37,02-09-2026 04:49,94
+Bug,COS-5805,Aptiv | CAD extraction issue – Incorrect thickness of sheet metal coil is showing as width dimension,Amrut,Rajendra.Kumar,Low,On Hold,28-05-2026 02:15,27-08-2026 07:27,101
+Story,COS-5638,Marmon  - Composition of PC & ABS ,Morgan,Vipin Joseph,Medium,To Do,18-05-2026 10:59,26-08-2026 07:57,111
+Story,COS-5631,Thermoforming & Vacuum forming process- Unfolding length calculation,Amrut,Balaji Sundararajan,Medium,To Do,18-05-2026 07:38,26-08-2026 07:57,111
+Story,COS-5590,CLONE - Digital factory - Supplier profile development,Akhila,Akhila Mohan C M,Medium,To Do,14-05-2026 10:27,22-08-2026 21:52,115
+Story,COS-5577,PCB Packaging - New packaging logic needs to be implemented ,Morgan,Manoj Bhat,Medium,To Do,14-05-2026 02:33,26-08-2026 07:57,115
+Bug,COS-5515,Unfolded view is incorrect-11/05,Amrut,Thrinadh Battagiri,Medium,On Hold,11-05-2026 06:39,30-06-2026 08:04,118
+Bug,COS-5501,Oshkosh | Incorrect bend count displayed in Bend Brake manufacturing process,Amrut,Rajendra.Kumar,Medium,On Hold,08-05-2026 13:06,30-06-2026 08:04,121
+Story,COS-5444,CLONE - Database - Manufacturing catalog - Development,Kishan,Akhila Mohan C M,Medium,Dev In Progress,06-05-2026 03:04,03-09-2026 01:28,123
+Story,COS-5439,Costing Suggestions (“Needs Review”) Not Available for Manually Costed Projects,Satyateja,Thrinadh Battagiri,Medium,To Do,06-05-2026 02:01,03-09-2026 07:48,123
+Bug,COS-5395,Flat price on EPDM material,Morgan,Balaji Sundararajan,Medium,Dev In Progress,30-04-2026 08:33,24-08-2026 20:29,129
+Bug,COS-5358,unfolded view is incorrect. it could be far better.,Amrut,Thrinadh Battagiri,High,On Hold,29-04-2026 02:02,30-06-2026 08:04,130
+Bug,COS-5325,Incorrect unfolded dimensions,Amrut,AKARSH K,High,On Hold,27-04-2026 05:46,30-06-2026 08:04,132
+Story,COS-5260,Color bars: The color bar (blue) does not revert to green when the user selects the default value again from the dropdown.,Akhila,Thrinadh Battagiri,Medium,To Do,21-04-2026 06:42,31-08-2026 06:53,138
+Bug,COS-5256,Aptiv | Unfolded view issue and manual calculation values reverting after cost recalculation,Amrut,Rajendra.Kumar,High,On Hold,21-04-2026 05:45,11-06-2026 08:08,138
+Bug,COS-5202,Unbend view is incorrect,Amrut,AKARSH K,High,On Hold,16-04-2026 09:42,30-06-2026 08:04,143
+Bug,COS-5194,(Gautam to approve) Painting process group is not available in process matrix in manufacturing section (Gilbarco env),Guhan,AKARSH K,High,On Hold,16-04-2026 06:53,18-08-2026 08:38,143
+Task,COS-5184,"In Siemens Env, CAD Files extraction issue.",Amrut,Syed Shihabuddin,High,On Hold,16-04-2026 03:49,01-06-2026 21:46,143
+Story,COS-5152,Component Engineering PCBA,Kishan,Manoj Bhat,Medium,To Do,14-04-2026 08:21,03-09-2026 00:47,145
+Task,COS-5063,DFM TO TBD,Amjath,Shankar,Medium,To Do,07-04-2026 22:22,02-09-2026 04:49,152
+Story,COS-5020,Sustainability details should reflect in Packaging and logistics too,Morgan,bharat s. rawanawar,Highest,To Do,06-04-2026 01:07,22-08-2026 21:52,153
+Bug,COS-5019,"Part is travelling 13K kilometre, but CO2 is zero",Guhan,bharat s. rawanawar,Highest,To Do,06-04-2026 01:06,02-09-2026 04:49,153
+Task,COS-4916,"Demo Project # 11590, Part min wall thickness is extracted wrongly showing as 0.4489mm, it should be 7.37mm.",Amrut,Manjunath Nagoji,Highest,On Hold,30-03-2026 07:08,26-08-2026 07:57,160
+Bug,COS-4889,Demo Project # 11484 Core details are extracted wrongly,Amrut,Manjunath Nagoji,High,Dev In Progress,27-03-2026 07:14,26-08-2026 08:38,163
+Story,COS-4737,Ford | Red / Yellow / Blue status and % Complete are not in sync for Material section,Akhila,Rajendra.Kumar,Medium,Dev In Progress,18-03-2026 06:28,02-09-2026 02:07,172
+Bug,COS-4701,"Upload template + CAD together if we upload, the tool is unable to extract the data.",Amrut,Thrinadh Battagiri,Highest,On Hold,16-03-2026 07:30,05-06-2026 01:36,174
+Task,COS-4678,Tarriff % varying from demo and se env,Morgan,Balaji Sundararajan,Highest,On Hold,13-03-2026 06:55,26-08-2026 07:57,177
+Bug,COS-4636,Demo #10578  Data Extraction in material information is Wrong For Diameter ,Amrut,NANDAGOPAL LJ,Highest,On Hold,11-03-2026 06:56,30-06-2026 08:04,179
+Bug,COS-4633,Tool is not extracting CAD model data,Amrut,Rajendra.Kumar,High,On Hold,11-03-2026 05:53,01-06-2026 21:45,179
+Story,COS-4625,Negotiated savings in costing right panel,Akhila,Akhila Mohan C M,Medium,To Do,11-03-2026 00:57,03-09-2026 08:07,179
+Bug,COS-4620,"Unfolded view is incorrect, results incorrect unfolded dimensions - 10/03",Amrut,Thrinadh Battagiri,Highest,On Hold,10-03-2026 09:56,01-06-2026 21:45,180
+Bug,COS-4575,"Unfolded view is incorrect, results incorrect unfolded dimensions.",Amrut,Thrinadh Battagiri,Highest,On Hold,06-03-2026 02:05,01-06-2026 21:45,184
+Story,COS-4533,HPDC Tooling section need to implement few enhancements as mentioned in description as asked by Lucid & Other clients.,Morgan,Manjunath Nagoji,Medium,To Do,03-03-2026 04:19,26-08-2026 07:57,187
+Bug,COS-4325,Lucid Part cad not extracting.,Amrut,Manjunath Nagoji,Highest,On Hold,18-02-2026 02:35,01-06-2026 21:45,200
+Task,COS-4219,Competitive Analysis in Analytics page,Naveen,Akhila Mohan C M,Medium,Dev In Progress,11-02-2026 09:27,03-09-2026 09:25,207
+Bug,COS-4115,3D CAD Feature extraction& Unbending issue,Amrut,Vimal Raj Mahadevan,Highest,On Hold,05-02-2026 02:05,01-06-2026 21:45,213
+Story,COS-3969,Roto molding enhancement,Amjath,Balaji Sundararajan,High,To Do,29-01-2026 02:36,22-08-2026 21:51,220
+Bug,COS-3924,Unfolding length and width is wrong,Amrut,Vinay Narayana Rao,Highest,On Hold,23-01-2026 05:46,01-06-2026 21:45,226
+Story,COS-3696,Digital factory Sync changes - UI,Akhila,Akhila Mohan C M,Medium,To Do,07-01-2026 09:17,22-08-2026 21:51,242
+Bug,COS-3688,Unfold dimensions are incorrect.,Amrut,Thrinadh Battagiri,Medium,On Hold,07-01-2026 04:00,30-06-2026 08:04,242
+Story,COS-3595,"Oshkosh | Hardware (across all business units), building catalog into tool (no models available) ",Kishan,Rajendra.Kumar,Medium,To Do,26-12-2025 08:52,03-09-2026 01:28,254
+Bug,COS-3533,Part extraction is taking too much time,Amrut,Balaji Sundararajan,High,On Hold,17-12-2025 07:33,01-06-2026 21:45,263
+Story,COS-3497,Component Engineering UI,Kishan,Akhila Mohan C M,Medium,To Do,15-12-2025 08:42,22-08-2026 21:51,265
+Bug,COS-3485,CAD dimensional details are not coming,Amrut,Balaji Sundararajan,Medium,On Hold,15-12-2025 01:08,23-07-2026 04:54,265
+Task,COS-3480,Aptiv - Plastic Colorant Enhancement,Morgan,Morgan Blubaugh,Medium,Dev In Progress,14-12-2025 19:59,26-08-2026 07:57,266
