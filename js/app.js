@@ -571,6 +571,65 @@
     }).filter(function(p){ return p.stories.length + p.bugs.length > 0; });
   }
 
+  // Text/ASCII bar rendering for the plain-text Email Report body, since
+  // mailto: bodies cannot carry images or attachments.
+  var TEXT_BAR_WIDTH = 24;
+  var TEXT_BAR_FILLED = '█';
+  var TEXT_BAR_STORIES = '█';
+  var TEXT_BAR_BUGS = '▓';
+  var TEXT_BAR_EMPTY = '░';
+
+  function textBar(count, max){
+    var filled = max > 0 ? Math.round((count / max) * TEXT_BAR_WIDTH) : 0;
+    if(count > 0 && filled === 0) filled = 1;
+    filled = Math.min(filled, TEXT_BAR_WIDTH);
+    return new Array(filled + 1).join(TEXT_BAR_FILLED) + new Array(TEXT_BAR_WIDTH - filled + 1).join(TEXT_BAR_EMPTY);
+  }
+
+  // Two-segment stacked bar (stories then bugs), mirroring the dashboard's
+  // Team Workload Distribution chart where each assignee's bar is split
+  // into a stories segment and a bugs segment.
+  function stackedTextBar(storiesCount, bugsCount, max){
+    var total = storiesCount + bugsCount;
+    var totalLen = max > 0 ? Math.round((total / max) * TEXT_BAR_WIDTH) : 0;
+    if(total > 0 && totalLen === 0) totalLen = 1;
+    totalLen = Math.min(totalLen, TEXT_BAR_WIDTH);
+
+    var storiesLen = total > 0 ? Math.round((storiesCount / total) * totalLen) : 0;
+    if(storiesCount > 0 && storiesLen === 0) storiesLen = 1;
+    storiesLen = Math.min(storiesLen, totalLen);
+    var bugsLen = totalLen - storiesLen;
+
+    return new Array(storiesLen + 1).join(TEXT_BAR_STORIES) +
+      new Array(bugsLen + 1).join(TEXT_BAR_BUGS) +
+      new Array(TEXT_BAR_WIDTH - totalLen + 1).join(TEXT_BAR_EMPTY);
+  }
+
+  function padLabel(str, len){
+    str = String(str);
+    return str.length >= len ? str : str + new Array(len - str.length + 1).join(' ');
+  }
+
+  // Ticket filters + assignee search combined, matching what's on screen
+  // (i.e. applyTicketFilters() plus the same search matching used by
+  // renderAssigneeList()). Used for anything that should reflect the
+  // fully filtered view, such as the Email Report content.
+  function getFilteredData(){
+    var filtered = applyTicketFilters(current);
+    var q = document.getElementById('assignee-search').value.trim().toLowerCase();
+    if(!q) return filtered;
+    return filtered.map(function(p){
+      var nameMatch = p.name.toLowerCase().indexOf(q) !== -1;
+      var matchingStories = p.stories.filter(function(t){
+        return nameMatch || (t.key && t.key.toLowerCase().indexOf(q) !== -1) || (t.summary && t.summary.toLowerCase().indexOf(q) !== -1);
+      });
+      var matchingBugs = p.bugs.filter(function(t){
+        return nameMatch || (t.key && t.key.toLowerCase().indexOf(q) !== -1) || (t.summary && t.summary.toLowerCase().indexOf(q) !== -1);
+      });
+      return {name: p.name, stories: matchingStories, bugs: matchingBugs};
+    }).filter(function(p){ return p.stories.length + p.bugs.length > 0; });
+  }
+
   function populateStatusFilter(data){
     var sel = document.getElementById('status-filter');
     var prev = sel.value;
@@ -975,8 +1034,13 @@
   var emailReportBtn = document.getElementById('email-report-btn');
   if(emailReportBtn){
     emailReportBtn.addEventListener('click', function(){
-      var filtered = applyTicketFilters(current);
-      var stats = computeStats(filtered);
+      var TOP_BUGS_LIMIT = 5;
+      var WORKLOAD_LIMIT = 8;
+
+      var filteredData = getFilteredData();
+      var stats = computeStats(filteredData);
+      var flat = flatten(filteredData);
+
       var type = document.getElementById('type-filter').value;
       var priority = document.getElementById('priority-filter').value;
       var status = document.getElementById('status-filter').value;
@@ -1002,13 +1066,89 @@
         lines.push('Filters applied: ' + activeFilters.join(', '));
         lines.push('');
       }
+
+      lines.push('OVERVIEW');
       lines.push('Stories open: ' + stats.stories);
       lines.push('Bugs open: ' + stats.bugs);
       lines.push('Total open items: ' + stats.total);
       lines.push('Assignees: ' + stats.assignees);
       lines.push('Aging 90+ days: ' + stats.aging);
       lines.push('');
+
+      // Distribution breakdown (priority / status)
+      var byPriority = Object.create(null);
+      var byStatus = Object.create(null);
+      flat.forEach(function(x){
+        var p = x.t.priority || 'None';
+        var s = x.t.status || 'None';
+        byPriority[p] = (byPriority[p] || 0) + 1;
+        byStatus[s] = (byStatus[s] || 0) + 1;
+      });
+      var priorityOrder = PRIORITY_ORDER.filter(function(p){ return byPriority[p]; });
+      Object.keys(byPriority).forEach(function(p){
+        if(priorityOrder.indexOf(p) === -1) priorityOrder.push(p);
+      });
+      var statusOrder = Object.keys(byStatus).sort(function(a, b){ return byStatus[b] - byStatus[a]; });
+
+      if(priorityOrder.length || statusOrder.length){
+        lines.push('DISTRIBUTION BREAKDOWN');
+        if(priorityOrder.length){
+          var maxPriority = Math.max.apply(null, priorityOrder.map(function(p){ return byPriority[p]; }));
+          lines.push('By Priority:');
+          priorityOrder.forEach(function(p){
+            lines.push('  ' + padLabel(p, 16) + ' ' + textBar(byPriority[p], maxPriority) + ' ' + byPriority[p]);
+          });
+        }
+        if(statusOrder.length){
+          var maxStatus = Math.max.apply(null, statusOrder.map(function(s){ return byStatus[s]; }));
+          lines.push('By Status:');
+          statusOrder.forEach(function(s){
+            lines.push('  ' + padLabel(s, 16) + ' ' + textBar(byStatus[s], maxStatus) + ' ' + byStatus[s]);
+          });
+        }
+        lines.push('');
+      }
+
+      // Top aging bugs
+      var topBugs = flat.filter(function(x){ return x.itype === 'Bug'; })
+        .sort(function(a, b){ return (b.t.due || 0) - (a.t.due || 0); })
+        .slice(0, TOP_BUGS_LIMIT);
+      if(topBugs.length){
+        lines.push('TOP AGING BUGS (oldest first)');
+        topBugs.forEach(function(x){
+          lines.push(x.t.key + ' - ' + x.t.summary + ' (' + x.assignee + ', ' + (x.t.priority || '—') + ', ' + (x.t.status || '—') + ') - ' + (x.t.due || 0) + 'd');
+        });
+        lines.push('');
+      }
+
+      // Team workload
+      var workload = filteredData.map(function(p){
+        return {name: p.name, stories: p.stories.length, bugs: p.bugs.length, total: p.stories.length + p.bugs.length};
+      }).sort(function(a, b){ return b.total - a.total; });
+      if(workload.length){
+        var maxWorkload = workload[0].total;
+        lines.push('TEAM WORKLOAD' + (workload.length > WORKLOAD_LIMIT ? ' (top ' + WORKLOAD_LIMIT + ')' : ''));
+        lines.push('  (' + TEXT_BAR_STORIES + ' stories, ' + TEXT_BAR_BUGS + ' bugs)');
+        workload.slice(0, WORKLOAD_LIMIT).forEach(function(w){
+          lines.push('  ' + padLabel(w.name, 12) + ' ' + stackedTextBar(w.stories, w.bugs, maxWorkload) + ' ' + w.total + ' (' + w.stories + 's/' + w.bugs + 'b)');
+        });
+        if(workload.length > WORKLOAD_LIMIT){
+          lines.push('  + ' + (workload.length - WORKLOAD_LIMIT) + ' more assignee(s) not shown');
+        }
+        lines.push('');
+      }
+
       lines.push('View this filtered dashboard: ' + window.location.href);
+
+      // Copy a ready-to-run command for the richer, screenshot-based report
+      // (email-report/send-report.js), scoped to the current filters via the URL.
+      var reportCommand = 'cd "C:\\Playwright Projects\\Tvh-Playwright-Automtion-Ui\\DailyJiraReport-main\\email-report"\r\n' +
+        'node send-report.js' + (window.location.search ? ' "' + window.location.search + '"' : '');
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(reportCommand).then(function(){
+          showToast('Copied command for full report (paste into terminal)');
+        }).catch(function(){});
+      }
 
       var mailto = 'mailto:?subject=' + encodeURIComponent(subject) +
         '&body=' + encodeURIComponent(lines.join('\r\n'));
