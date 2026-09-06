@@ -508,6 +508,47 @@
   }
 
   // -------------------------------------------------------------
+  // Filter State <-> URL Sync (shareable / bookmarkable filtered views)
+  // -------------------------------------------------------------
+  function syncFiltersToURL(){
+    var params = new URLSearchParams();
+    var type = document.getElementById('type-filter').value;
+    var priority = document.getElementById('priority-filter').value;
+    var status = document.getElementById('status-filter').value;
+    var search = document.getElementById('assignee-search').value.trim();
+    var sort = document.getElementById('sort-select').value;
+
+    if(type) params.set('type', type);
+    if(priority) params.set('priority', priority);
+    if(status) params.set('status', status);
+    if(activeAgingFilter) params.set('aging', String(activeAgingFilter));
+    if(search) params.set('q', search);
+    if(sort && sort !== 'age-desc') params.set('sort', sort);
+
+    var qs = params.toString();
+    var newUrl = location.pathname + (qs ? '?' + qs : '') + location.hash;
+    history.replaceState(null, '', newUrl);
+  }
+
+  function readFiltersFromURL(){
+    var params = new URLSearchParams(location.search);
+    var type = params.get('type');
+    var priority = params.get('priority');
+    var status = params.get('status');
+    var aging = params.get('aging');
+    var search = params.get('q');
+    var sort = params.get('sort');
+
+    if(type) document.getElementById('type-filter').value = type;
+    if(priority) document.getElementById('priority-filter').value = priority;
+    if(status) document.getElementById('status-filter').value = status;
+    if(aging === '90' || aging === '30') activeAgingFilter = parseInt(aging, 10);
+    if(search) document.getElementById('assignee-search').value = search;
+    if(sort) document.getElementById('sort-select').value = sort;
+    updateClearSearchBtn();
+  }
+
+  // -------------------------------------------------------------
   // Filtering & Search
   // -------------------------------------------------------------
   function applyTicketFilters(data){
@@ -544,6 +585,7 @@
   }
 
   function renderAll(){
+    syncFiltersToURL();
     var filtered = applyTicketFilters(current);
     renderStats(filtered);
     renderBreakdowns(filtered);
@@ -930,6 +972,50 @@
     });
   }
 
+  var emailReportBtn = document.getElementById('email-report-btn');
+  if(emailReportBtn){
+    emailReportBtn.addEventListener('click', function(){
+      var filtered = applyTicketFilters(current);
+      var stats = computeStats(filtered);
+      var type = document.getElementById('type-filter').value;
+      var priority = document.getElementById('priority-filter').value;
+      var status = document.getElementById('status-filter').value;
+      var search = document.getElementById('assignee-search').value.trim();
+
+      var activeFilters = [];
+      if(type) activeFilters.push('Type = ' + type);
+      if(priority) activeFilters.push('Priority = ' + priority);
+      if(status) activeFilters.push('Status = ' + status);
+      if(activeAgingFilter) activeFilters.push('Aging ' + activeAgingFilter + '+ days');
+      if(search) activeFilters.push('Search = "' + search + '"');
+
+      var snapshotText = document.getElementById('snapshot-date').textContent;
+      var subject = 'Daily Jira Bugs & Stories Report - ' + snapshotText +
+        (activeFilters.length ? ' (filtered)' : '');
+
+      var lines = [
+        'Daily Jira Bugs & Stories Report',
+        'Project COS - snapshot ' + snapshotText,
+        ''
+      ];
+      if(activeFilters.length){
+        lines.push('Filters applied: ' + activeFilters.join(', '));
+        lines.push('');
+      }
+      lines.push('Stories open: ' + stats.stories);
+      lines.push('Bugs open: ' + stats.bugs);
+      lines.push('Total open items: ' + stats.total);
+      lines.push('Assignees: ' + stats.assignees);
+      lines.push('Aging 90+ days: ' + stats.aging);
+      lines.push('');
+      lines.push('View this filtered dashboard: ' + window.location.href);
+
+      var mailto = 'mailto:?subject=' + encodeURIComponent(subject) +
+        '&body=' + encodeURIComponent(lines.join('\r\n'));
+      window.location.href = mailto;
+    });
+  }
+
   var resetPreviewBtn = document.getElementById('reset-preview');
   if(resetPreviewBtn){
     resetPreviewBtn.addEventListener('click', function(){
@@ -961,6 +1047,7 @@
   initStatCardClicks();
   initDragAndDrop();
   populateStatusFilter(current);
+  readFiltersFromURL();
   renderAll();
 
 })();
