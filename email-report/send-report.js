@@ -12,11 +12,40 @@ const DASHBOARD_FILE_URL = "file:///" + DASHBOARD_FILE.replace(/\\/g, "/");
 const LIVE_BASE_URL = "https://raajendrakumar.github.io/DailyJiraReport/";
 const DRAFT_PATH = path.join(SCRIPT_DIR, "Daily Jira Report - Dashboard.eml");
 const DATA_PATH = path.join(OUT_DIR, "report-data.json");
+const EXPORT_EXTENSIONS = new Set([".csv", ".xlsx", ".xls"]);
 
-// Resolve which dashboard URL to open, from an optional CLI arg:
-//   (none)                -> local file, unfiltered
-//   "?priority=High"      -> local file with those filters applied
-//   "http://..."          -> that URL verbatim (local dev server or the live site)
+// Usage: node send-report.js [urlOrFilters] [exportFilePath]
+//   urlOrFilters:
+//     (none)                -> local file, unfiltered
+//     "?priority=High"      -> local file with those filters applied
+//     "http://..."          -> that URL verbatim (local dev server or the live site)
+//   exportFilePath (optional):
+//     path to a Jira export (.xlsx/.xls/.csv) to load into the dashboard
+//     before capturing - the same file you'd drag onto the page - so the
+//     report reflects fresh data instead of index.html's baked-in snapshot.
+//     Defaults to the most recently modified .csv/.xlsx/.xls file directly
+//     in this folder, if any - just drop a fresh export here (any filename)
+//     and every run picks it up automatically. Pass an explicit path to
+//     override, or "-" to skip upload entirely and use index.html's
+//     baked-in snapshot.
+function findLatestExport(dir) {
+  let entries;
+  try {
+    entries = fs.readdirSync(dir, { withFileTypes: true });
+  } catch (err) {
+    return undefined;
+  }
+  const candidates = entries
+    .filter((e) => e.isFile() && EXPORT_EXTENSIONS.has(path.extname(e.name).toLowerCase()))
+    .map((e) => {
+      const full = path.join(dir, e.name);
+      return { path: full, mtimeMs: fs.statSync(full).mtimeMs };
+    });
+  if (!candidates.length) return undefined;
+  candidates.sort((a, b) => b.mtimeMs - a.mtimeMs);
+  return candidates[0].path;
+}
+
 function resolveNavUrl(arg) {
   if (!arg) return new URL(DASHBOARD_FILE_URL);
   if (arg.indexOf("?") === 0) return new URL(DASHBOARD_FILE_URL + arg);
@@ -33,13 +62,26 @@ function describeFilters(params) {
   return labels;
 }
 
-async function captureAndExtract(navUrl) {
+async function captureAndExtract(navUrl, uploadFilePath) {
   console.log("[1/3] Capturing dashboard screenshots + data (Playwright) from:");
   console.log("      " + navUrl.href);
 
   const browser = await chromium.launch({ headless: true });
   const page = await browser.newPage({ viewport: { width: 1440, height: 1000 } });
   await page.goto(navUrl.href, { waitUntil: "networkidle" });
+
+  if (uploadFilePath) {
+    const resolvedUploadPath = path.resolve(uploadFilePath);
+    if (!fs.existsSync(resolvedUploadPath)) {
+      throw new Error("Export file not found: " + resolvedUploadPath);
+    }
+    console.log("      Loading latest export: " + resolvedUploadPath);
+    await page.setInputFiles("#file-input", resolvedUploadPath);
+    // handleFile() parses the export asynchronously (FileReader) then re-renders;
+    // the preview banner going active is the app's own signal that it's done.
+    await page.waitForSelector("#preview-banner.active", { timeout: 15000 });
+  }
+
   await page.waitForTimeout(700); // let KPI count-up animations settle before reading them
 
   // Charts - real screenshots of what the app renders, embedded inline in the email.
@@ -130,12 +172,19 @@ function triggerMail() {
   execFileSync("powershell", ["-Command", `Start-Process '${DRAFT_PATH}'`], { stdio: "inherit" });
 }
 
+function resolveUploadFilePath(arg) {
+  if (arg === "-") return undefined; // explicit opt-out
+  if (arg) return arg;
+  return findLatestExport(SCRIPT_DIR);
+}
+
 async function main() {
   const navUrl = resolveNavUrl(process.argv[2]);
+  const uploadFilePath = resolveUploadFilePath(process.argv[3]);
   const activeFilters = describeFilters(navUrl.searchParams);
   const liveDashboardUrl = LIVE_BASE_URL + (navUrl.search || "");
 
-  const extracted = await captureAndExtract(navUrl);
+  const extracted = await captureAndExtract(navUrl, uploadFilePath);
 
   fs.mkdirSync(OUT_DIR, { recursive: true });
   fs.writeFileSync(

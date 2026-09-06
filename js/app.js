@@ -877,6 +877,35 @@
     });
   }
 
+  // Parses Jira's native CSV export date format, e.g. "04/Sep/26 8:16 AM"
+  // (DD/Mon/YY h:mm AM/PM). Returns null if the string doesn't match.
+  function parseJiraDate(s){
+    if(!s) return null;
+    var m = /^(\d{1,2})\/([A-Za-z]{3})\/(\d{2,4})\s+(\d{1,2}):(\d{2})\s*(AM|PM)?$/i.exec(String(s).trim());
+    if(!m) return null;
+    var months = {Jan:0,Feb:1,Mar:2,Apr:3,May:4,Jun:5,Jul:6,Aug:7,Sep:8,Oct:9,Nov:10,Dec:11};
+    var month = months[m[2].charAt(0).toUpperCase() + m[2].slice(1, 3).toLowerCase()];
+    if(month === undefined) return null;
+    var day = parseInt(m[1], 10);
+    var year = parseInt(m[3], 10);
+    if(year < 100) year += 2000;
+    var hour = parseInt(m[4], 10);
+    var minute = parseInt(m[5], 10);
+    var ampm = m[6] ? m[6].toUpperCase() : null;
+    if(ampm === 'PM' && hour !== 12) hour += 12;
+    if(ampm === 'AM' && hour === 12) hour = 0;
+    return new Date(year, month, day, hour, minute);
+  }
+
+  // Days between a Jira "Created" timestamp and now - used as a fallback
+  // when the export has no precomputed Due Days / Days Open column (i.e.
+  // a raw Jira CSV export rather than one already annotated with it).
+  function daysSinceCreated(row){
+    var created = parseJiraDate(row['Created']);
+    if(!created) return 0;
+    return Math.max(0, Math.floor((Date.now() - created.getTime()) / 86400000));
+  }
+
   function groupRows(rows){
     var people = Object.create(null);
     rows.forEach(function(row){
@@ -884,7 +913,7 @@
       if(itype !== 'Story' && itype !== 'Bug') return;
       var assignee = String(row['Assignee'] || '').trim() || 'Unassigned';
       var dueRaw = String(row['Due Days'] != null ? row['Due Days'] : (row['Days Open'] != null ? row['Days Open'] : '')).trim();
-      var due = /^-?\d+$/.test(dueRaw) ? parseInt(dueRaw, 10) : 0;
+      var due = /^-?\d+$/.test(dueRaw) ? parseInt(dueRaw, 10) : daysSinceCreated(row);
       var entry = {
         key: String(row['Issue key'] || row['Key'] || '').trim(),
         summary: String(row['Summary'] || '').trim(),
